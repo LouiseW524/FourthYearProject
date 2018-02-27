@@ -23,4 +23,4 @@ move *.json C:/"Program Files (x86)"/Jenkins/workspace/"Fourth Year Project V1.1
 cd..
 cd..
 cd..
-del shubhmamp
+del /Q shubhmamp
