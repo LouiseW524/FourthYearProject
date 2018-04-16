@@ -7,7 +7,8 @@ cur = conn.cursor()
 
 import sys
 
-#cur.execute("""SELECT * FROM teamlist where matchid = %s """, (match_id, team_id))
-#conceded = cur.fetchall()
+cur.execute("""SELECT * FROM teamlist where matchid = %s """, (sys.argv[1],))
+conceded = cur.fetchall()
 
-print('Argument List:', sys.argv[1])
+for item in conceded:
+    print(item)

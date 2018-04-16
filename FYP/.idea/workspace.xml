@@ -36,8 +36,8 @@
       <file leaf-file-name="NBMulitnomial.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NBMulitnomial.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="1" lean-forward="false" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+            <state relative-caret-position="204">
+              <caret line="12" column="21" lean-forward="false" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
               <folding>
                 <element signature="e#18#33#0" expanded="true" />
               </folding>
@@ -582,8 +582,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NBMulitnomial.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="1" lean-forward="false" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+        <state relative-caret-position="204">
+          <caret line="12" column="21" lean-forward="false" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
           <folding>
             <element signature="e#18#33#0" expanded="true" />
           </folding>
