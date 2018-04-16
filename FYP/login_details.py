@@ -1,0 +1,2 @@
+DB_USER = 'postgres'
+DB_PASSWORD = 'KS558VNZ'
