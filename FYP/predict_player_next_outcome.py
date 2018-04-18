@@ -109,8 +109,7 @@ for player_id in all_player_ids:
 
 
     probability_of_player_scoring_positively = (goal_scoring_probability * assist_probability * prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet * probability_no_penalty_miss * proabaility_no_own_goals * probability_save * probability_penalty_save)
-    Goalkeeper_probability_positive_score = (goal_scoring_probability)
 
-    if probability_of_player_scoring_positively > 0:
-        print(player_id)
-        print(probability_of_player_scoring_positively)
+
+    print(player_id)
+    print(probability_of_player_scoring_positively)
