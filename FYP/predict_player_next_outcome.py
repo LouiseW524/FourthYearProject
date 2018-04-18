@@ -108,7 +108,7 @@ for player_id in all_player_ids:
     probability_penalty_save = get_probablity(player_id[0],8,count_matches_played_by_player)
 
 
-    probability_of_player_scoring_positively = (goal_scoring_probability * assist_probability * prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet * probability_no_penalty_miss * proabaility_no_own_goals * probability_save * probability_penalty_save)
+    probability_of_player_scoring_positively = float(goal_scoring_probability * assist_probability * prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet * probability_no_penalty_miss * proabaility_no_own_goals * probability_save * probability_penalty_save)
 
 
     print(player_id)
