@@ -37,7 +37,7 @@ def add_sum_values(value):
     return result
 
 def get_probabilities_maths(single_value, count_matches_played_by_player):
-    return (single_value + 1)/count_matches_played_by_player
+    return (single_value + 1)/(count_matches_played_by_player +1)
 
 def total_matches_per_player(player_id):
     cur.execute("""SELECT count(*) FROM player_match_stats WHERE playerid = %s""", (player_id, ))
@@ -62,7 +62,7 @@ def get_zeroes_from_list_prob(player_id, cell_for_sql, count_matches_played_by_p
     for goal in goals_list:
         if int(goal[0]) == 0:
             results += 1
-    prob_no_conceded = results + 1 / count_matches_played_by_player
+    prob_no_conceded = (results + 1) / (count_matches_played_by_player +1)
     return prob_no_conceded
 
 cur.execute("""SELECT DISTINCT playerid FROM teamlist where teamid = %s OR teamid = %s""", (sys.argv[1],sys.argv[2]) )
