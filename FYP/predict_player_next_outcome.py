@@ -37,7 +37,7 @@ def add_sum_values(value):
     return result
 
 def get_probabilities_maths(single_value, count_matches_played_by_player):
-    return single_value/count_matches_played_by_player
+    return (single_value + 1)/count_matches_played_by_player
 
 def total_matches_per_player(player_id):
     cur.execute("""SELECT count(*) FROM player_match_stats WHERE playerid = %s""", (player_id, ))
@@ -99,7 +99,7 @@ for player_id in all_player_ids:
 
 ##owngoals
     probability_own_goals = get_probablity(player_id[0],6,count_matches_played_by_player)
-    proabaility_no_own_goals = 1 - probability_own_goals
+    probability_no_own_goals = 1 - probability_own_goals
 
 # saves
     probability_save = get_probablity(player_id[0],7,count_matches_played_by_player)
@@ -107,10 +107,20 @@ for player_id in all_player_ids:
 #  penaltysaves
     probability_penalty_save = get_probablity(player_id[0],8,count_matches_played_by_player)
 
-
-    probability_of_player_scoring_positively = float(goal_scoring_probability * assist_probability * prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet * probability_no_penalty_miss * proabaility_no_own_goals * probability_save * probability_penalty_save)
-    probability_of_GK_positive = proabaility_no_own_goals * probability_save * probability_penalty_save * prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet
-
     cur.execute("""select playername from players where playerid = %s""", (player_id[0],))
     print(cur.fetchall())
+    print("goal scoring:" ,goal_scoring_probability)
+    print("goal assist:", assist_probability)
+    print("red:", prob_of_no_redcard)
+    print("yellow:", prob_of_no_yellowcard)
+    print("no_conceded:",prob_of_no_goals_conceded )
+    print("cleansheet:",probability_of_clean_sheet )
+    print("no_penalty_miss:",probability_no_penalty_miss )
+    print("proabaility_no_own_goals:", probability_no_own_goals)
+    print("probability_save:", probability_save)
+    print("probability_penalty_save", probability_penalty_save)
+
+    probability_of_GK_positive = probability_no_own_goals * probability_save * probability_penalty_save * prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet
+
+
     print(probability_of_GK_positive)
