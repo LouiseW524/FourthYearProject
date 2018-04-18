@@ -76,7 +76,8 @@ all_player_ids = cur.fetchall()
 for player_id in all_player_ids:
 
     cur.execute("""SELECT DISTINCT playerposition from player_match_stats where playerid = %s""", (player_id[0],))
-    position = cur.fetchall
+    for pos in cur.fetchall():
+        position = pos[0]
 
 ##get_total number of matches per player
     count_matches_played_by_player = total_matches_per_player(player_id[0])
