@@ -22,7 +22,7 @@ def select_player_id_condition(player_id, cell_for_sql):
     if cell_for_sql == 6 :
         cur.execute("""SELECT owngoals FROM player_match_stats WHERE playerid = %s""", (player_id,))
     if cell_for_sql == 7:
-        cur.execute("""SELECT saves FROM player_match_stats WHERE playerid = %s""", (player_id,))
+        cur.execute("""SELECT count(saves) FROM player_match_stats WHERE playerid = %s AND saves !='0' AND saves !='1'""", (player_id,))
     if cell_for_sql == 8:
         cur.execute("""SELECT penaltysaves FROM player_match_stats WHERE playerid = %s""", (player_id,))
 
@@ -54,14 +54,19 @@ def get_probablity(player_id, sql_number,count_matches_played_by_player):
 def get_zeroes_from_list_prob(player_id, cell_for_sql, count_matches_played_by_player):
     if cell_for_sql == 1:
         cur.execute("""SELECT goalsconceded FROM player_match_stats WHERE playerid = %s """, (player_id[0],))
+        goals_list = cur.fetchall()
+        results = 0
+        for goal in goals_list:
+            if int(goal[0]) <= 1:
+                results += 1
     if cell_for_sql ==2 :
         cur.execute("""SELECT cleansheet FROM player_match_stats WHERE playerid = %s """, (player_id[0],))
+        goals_list = cur.fetchall()
+        results = 0
+        for goal in goals_list:
+            if int(goal[0]) == 0:
+                results += 1
 
-    goals_list = cur.fetchall()
-    results = 0
-    for goal in goals_list:
-        if int(goal[0]) == 0:
-            results += 1
     prob_no_conceded = (results + 1) / (count_matches_played_by_player +1)
     return prob_no_conceded
 
@@ -69,6 +74,9 @@ cur.execute("""SELECT DISTINCT playerid FROM teamlist where teamid = %s OR teami
 all_player_ids = cur.fetchall()
 
 for player_id in all_player_ids:
+
+    cur.execute("""SELECT DISTINCT playerposition from player_match_stats where playerid = %s""", (player_id[0],))
+    position = cur.fetchall
 
 ##get_total number of matches per player
     count_matches_played_by_player = total_matches_per_player(player_id[0])
@@ -120,7 +128,11 @@ for player_id in all_player_ids:
     print("probability_save:", probability_save)
     print("probability_penalty_save", probability_penalty_save)
 
-    probability_of_GK_positive = probability_no_own_goals * probability_save * probability_penalty_save * prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet
+    if position[0] == '0':
+        overall_positive_probability = probability_penalty_save * probability_save * assist_probability * prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet * probability_no_own_goals
+    if position[0] == '1':
+        overall_positive_probability = goal_scoring_probability * assist_probability *  prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet * probability_no_own_goals
+    if position[0] == '2':
+        overall_positive_probability = goal_scoring_probability * assist_probability *  prob_of_no_redcard * prob_of_no_yellowcard * probability_of_clean_sheet * probability_no_penalty_miss * probability_no_own_goals
 
-
-    print(probability_of_GK_positive)
+    print(overall_positive_probability)
