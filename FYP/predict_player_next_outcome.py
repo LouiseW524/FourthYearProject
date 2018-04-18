@@ -129,6 +129,7 @@ for player_id in all_player_ids:
     print("probability_save:", probability_save)
     print("probability_penalty_save", probability_penalty_save)
 
+    overall_positive_probability = 0.0
     if position[0] == '0':
         overall_positive_probability = probability_penalty_save * probability_save * assist_probability * prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet * probability_no_own_goals
     if position[0] == '1':
