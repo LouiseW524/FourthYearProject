@@ -70,7 +70,7 @@ def get_zeroes_from_list_prob(player_id, cell_for_sql, count_matches_played_by_p
     prob_no_conceded = (results + 1) / (count_matches_played_by_player +1)
     return prob_no_conceded
 
-cur.execute("""SELECT DISTINCT playerid FROM teamlist where teamid = %s OR teamid = %s""", ("13", "96"))##(sys.argv[1],sys.argv[2]) )
+cur.execute("""SELECT DISTINCT playerid FROM teamlist where teamid = %s OR teamid = %s""", (sys.argv[1],sys.argv[2]) )
 all_player_ids = cur.fetchall()
 
 GK = []
@@ -140,13 +140,13 @@ for player_id in all_player_ids:
         FW.append((overall_positive_probability, player_name))
 
 print("GK")
-print(GK)
+print(sorted(GK, key=lambda x: x[0], reverse=True))
 print("DF")
-print(DF)
+print(sorted(DF, key=lambda x: x[0], reverse=True))
 print("MID")
-print(MID)
+print(sorted(MID, key=lambda x: x[0], reverse=True))
 print("FW")
-print(FW)
+print(sorted(FW, key=lambda x: x[0], reverse=True))
     # print("goal scoring:", goal_scoring_probability)
     # print("goal assist:", assist_probability)
     # print("no red:", prob_of_no_redcard)
