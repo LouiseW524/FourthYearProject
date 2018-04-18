@@ -62,7 +62,7 @@ def get_zeroes_from_list_prob(player_id, cell_for_sql, count_matches_played_by_p
     for goal in goals_list:
         if int(goal[0]) == 0:
             results += 1
-    prob_no_conceded = results / count_matches_played_by_player
+    prob_no_conceded = results + 1 / count_matches_played_by_player
     return prob_no_conceded
 if sys.argv[1] & sys.argv[2] :
     cur.execute("""SELECT DISTINCT playerid FROM teamlist where teamid = %s OR teamid = %s""", (sys.argv[1],sys.argv[2]) )
@@ -112,6 +112,7 @@ for player_id in all_player_ids:
 
 
     probability_of_player_scoring_positively = (goal_scoring_probability * assist_probability * prob_of_no_redcard * prob_of_no_yellowcard * prob_of_no_goals_conceded * probability_of_clean_sheet * probability_no_penalty_miss * proabaility_no_own_goals * probability_save * probability_penalty_save)
+    Goalkeeper_probability_positive_score = (goal_scoring_probability)
 
     if probability_of_player_scoring_positively > 0:
         print(player_id)
