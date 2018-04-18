@@ -30,6 +30,9 @@ for match_id, match_value in data.items():
                                 player_position = '3'
                             elif player_detail_value['player_position_info'] in ["GK"]:
                                 player_position ='0'
+                            elif player_detail_value['player_position_info'] in ["Sub"]:
+                                player_position = '4'
+
 
                             player_rating = player_detail_value['player_rating']
                             player_id = player_detail_value['player_id']

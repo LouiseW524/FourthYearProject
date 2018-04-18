@@ -109,3 +109,8 @@ for fw in forwards:
 
     cur.execute("""INSERT INTO player_points_per_match ( playerid , matchid , playerpoints) VALUES (%s, %s, %s)""",(fw[0], fw[1], total_points))
 
+cur.execute("""SELECT * FROM player_match_stats where playerposition LIKE '4'""")
+subs = cur.fetchall()
+for sub in subs:
+    cur.execute("""INSERT INTO player_points_per_match ( playerid , matchid , playerpoints) VALUES (%s, %s, %s)""",
+                (sub[0], sub[1], 0))
