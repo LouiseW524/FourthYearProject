@@ -1,5 +1,6 @@
 import psycopg2.extras
 from login_details import DB_PASSWORD, DB_USER
+import sys
 
 conn = psycopg2.connect("dbname='fyp' user=%s host='localhost' password=%s" % (DB_USER, DB_PASSWORD))
 conn.set_isolation_level(0)
@@ -170,9 +171,9 @@ def goal_points(player, previous_matches_between_teams):
 
 ########################################################################################################################
 
-all_matchid_before_this_week = get_all_matches_before_this_week(24, )
-#insert_new_weeks_into_training_data(24,all_matchid_before_this_week)
-all_matches_this_week = get_matches_this_week(24)
+all_matchid_before_this_week = get_all_matches_before_this_week(sys.argv[1], )
+insert_new_weeks_into_training_data(sys.argv[1],all_matchid_before_this_week)
+all_matches_this_week = get_matches_this_week(sys.argv[1])
 player_position = []
 for matches in all_matches_this_week:
 
@@ -273,7 +274,7 @@ all_players.append(forwards[:1])
 for player in all_players:
     print(player)
 
-#delete_weekly_historical_data(all_matchid_before_this_week)
+delete_weekly_historical_data(all_matchid_before_this_week)
 
 
 
