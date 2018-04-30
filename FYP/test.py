@@ -11,6 +11,7 @@ goalkeepers = []
 defenders = []
 forwards = []
 mids = []
+all_points = 0
 
 goalkeeper_dict = {}
 defender_dict = {}
@@ -170,7 +171,7 @@ def goal_points(player, previous_matches_between_teams):
 
 
 ########################################################################################################################
-
+#
 all_matchid_before_this_week = get_all_matches_before_this_week(sys.argv[1], )
 insert_new_weeks_into_training_data(sys.argv[1],all_matchid_before_this_week)
 all_matches_this_week = get_matches_this_week(sys.argv[1])
@@ -271,10 +272,25 @@ all_players.append(first_choice_gk[0])
 for d in defenders[:3]:
     all_players.append([d])
 all_players.append(forwards[:1])
+print("TEAM FOR WEEK :", sys.argv[1] )
 for player in all_players:
     print(player)
 
-delete_weekly_historical_data(all_matchid_before_this_week)
+    cur.execute("""SELECT playerid from players where playername = %s""" ,(player[0],))
+    player_ids = cur.fetchall()
+
+    for match in all_matches_this_week:
+        for playerid in player_ids:
+            cur.execute("""SELECT playerpoints from player_points_per_match where playerid = %s AND matchid = %s""", (playerid[0],match[0]))
+            points = cur.fetchall()
+            if points:
+                for p in points:
+                    all_points += int(p[0])
+
+print(" \n TOTAL POINTS : ", all_points)
+
+
+#delete_weekly_historical_data(all_matchid_before_this_week)
 
 
 
