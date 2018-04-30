@@ -8,10 +8,10 @@ conn = psycopg2.connect("dbname='fyp' user=%s host='localhost' password=%s" % (D
 conn.set_isolation_level(0)
 cur = conn.cursor()
 
-data = json.load(open('C:/Users/louis/Downloads/english-premier-league-match-data/datafile/season14-15/season_stats.json'))
+data = json.load(open('C:/Users/louis/Downloads/english-premier-league-match-data/datafile/season16-17/season_stats.json',encoding="utf8"))
 
 for match_id, match_value in data.items():
-    for team_id, team_value in match_value.items(): ##document
+    for team_id, team_value in match_value.items():
         for match_details_key, match_deatils_value in team_value.items():
             if 'Player_stats' == match_details_key:
                  for player_id, player_value in team_value.items():

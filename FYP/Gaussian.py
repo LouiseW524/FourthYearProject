@@ -7,13 +7,13 @@ conn = psycopg2.connect("dbname='fyp' user=%s host='localhost' password=%s" % (D
 conn.set_isolation_level(0)
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-cur.execute("""SELECT DISTINCT playerid FROM teamlist""")
+cur.execute("""SELECT DISTINCT playerid FROM training_teamlist""")
 all_player_ids = cur.fetchall()
 list_of_stats = []
 features_list = []
 target_list = []
 for player_id in all_player_ids:
-    cur.execute("""SELECT * FROM player_match_stats WHERE playerid = %s""", (player_id[0],))
+    cur.execute("""SELECT * FROM training_player_match_stats WHERE playerid = %s""", (player_id[0],))
     all_stats = cur.fetchall()
     for stat in all_stats:
         match_id = stat['matchid']

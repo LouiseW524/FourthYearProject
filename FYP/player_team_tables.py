@@ -8,12 +8,11 @@ conn = psycopg2.connect("dbname='fyp' user=%s host='localhost' password=%s" % (D
 conn.set_isolation_level(0)
 cur = conn.cursor()
 
-data = json.load(open('C:/Users/louis/Downloads/english-premier-league-match-data/datafile/season14-15/season_stats.json'))
-match_team_player_dict = {}
-team_name_id = {}
+data = json.load(open('C:/Users/louis/Downloads/english-premier-league-match-data/datafile/season16-17/season_stats.json', encoding="utf8"))
 players = []
-list_team_details =[]
 player_id_list = []
+team_id_list = []
+
 
 def insert_player(player_name, player_id):
     sql = """INSERT INTO players (playerid, playername)
@@ -22,15 +21,14 @@ def insert_player(player_name, player_id):
     cur.execute(sql, data)
 
 for key, value in data.items():
+
     for underkey, undervalue in value.items(): ##document
          count = 0
          for subkey, subvalue in undervalue.items(): ##team
              if (subkey == 'team_details'):
-                 for basekey, basevalue in subvalue.items():
-                     count = count + 1
-                     list_team_details.append(basevalue)
-                     if count == 2:
-                         break;
+                 t1 = (subvalue['team_id'], subvalue['team_name'])
+                 if t1 not in team_id_list:
+                        team_id_list.append(t1)
 
 
              if (subkey == 'Player_stats'):
@@ -40,12 +38,10 @@ for key, value in data.items():
                         if lastkey == 'player_details':
                             if lastvalue['player_id'] not in player_id_list:
                                  player_id_list.append(lastvalue['player_id'])
-                                 #insert_player(lastvalue['player_name'],lastvalue['player_id'])
+                                 insert_player(lastvalue['player_name'],lastvalue['player_id'])
 
-
-team_detail = d = dict([(k, v) for k, v in zip(list_team_details[::2], list_team_details[1::2])])
 
                      ####  ADDING TEAM NAMES/ IDS to POSTGRES team Table
-for key, value in team_detail.items():
-      cur.execute("""INSERT INTO teams (teamid, teamname) VALUES(%s,%s)""", (key, value))
+for item in team_id_list:
+    cur.execute("""INSERT INTO teams (teamid, teamname) VALUES(%s,%s)""", (item[0], item[1]))
 
