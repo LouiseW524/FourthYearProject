@@ -290,7 +290,7 @@ for player in all_players:
 print(" \n TOTAL POINTS : ", all_points)
 
 
-#delete_weekly_historical_data(all_matchid_before_this_week)
+delete_weekly_historical_data(all_matchid_before_this_week)
 
 
 
