@@ -12,6 +12,8 @@ defenders = []
 forwards = []
 mids = []
 all_points = 0
+all_players_point_list = []
+captain_calc = []
 
 goalkeeper_dict = {}
 defender_dict = {}
@@ -272,7 +274,13 @@ all_players.append(first_choice_gk[0])
 for d in defenders[:3]:
     all_players.append([d])
 all_players.append(forwards[:1])
-print("TEAM FOR WEEK :", sys.argv[1] )
+
+defender_dict.update(mid_dict)
+defender_dict.update(fw_dict)
+for player in sorted(defender_dict, key=all_player_dict.get, reverse=True)[:1]:
+    captain = player
+
+print("TEAM FOR WEEK :", sys.argv[1])
 for player in all_players:
     print(player)
 
@@ -285,10 +293,12 @@ for player in all_players:
             points = cur.fetchall()
             if points:
                 for p in points:
-                    all_points += int(p[0])
+                    if playerid[0] == captain:
+                        all_points += int(p[0])*2
+                    else:
+                        all_points += int(p[0])
 
 print(" \n TOTAL POINTS : ", all_points)
-
 
 delete_weekly_historical_data(all_matchid_before_this_week)
 
